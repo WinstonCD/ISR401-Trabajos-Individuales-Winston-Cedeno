@@ -1,0 +1,100 @@
+% Ingeniería de Requisitos (ISR-401) · UTEQ
+% TA-IND-01 · Caso hipotético de cobro predial
+% Borrador de trabajo: alcance, interesados y requisitos funcionales.
+% Las decisiones técnicas y la redacción requieren revisión del estudiante.
+\documentclass[10pt,onecolumn]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{csquotes}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=ieee,sorting=none]{biblatex}
+\addbibresource{referencias.bib}
+\DefineBibliographyStrings{spanish}{bibliography={Referencias}}
+\urlstyle{same}
+
+\setlength{\parindent}{0.65em}
+\setlength{\parskip}{2pt}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\arraystretch}{1.22}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\rf}[2]{\par\smallskip\noindent\textbf{#1.} #2\par}
+\newcommand{\prueba}[1]{\noindent{\footnotesize\textit{Comprobación propuesta:} #1}\par}
+
+\title{Requisitos iniciales para un sistema de cobro de impuestos prediales en línea\\
+\large TA-IND-01 · Avance técnico 1 (borrador)}
+\author{Cedeño Avila Winston Damian\\
+{\small Universidad Técnica Estatal de Quevedo · Facultad de Ciencias de la Computación}\\
+{\small Ingeniería de Software · Cuarto nivel «B» · Ingeniería de Requisitos (ISR-401)}\\
+{\small 1 de noviembre de 2026}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Este documento presenta un primer análisis de un caso propuesto en clase: un GAD cantonal necesita un portal para consultar y pagar impuestos prediales en línea. En esta versión se identifica a los actores que intervienen, se delimita el alcance y se proponen cinco requisitos funcionales. Se toman como referencia las orientaciones de ISO/IEC/IEEE 29148:2018 para expresar comportamientos que después puedan comprobarse \cite{iso29148}. El GAD es hipotético y, por el momento, no se cuenta con entrevistas, contratos ni datos de funcionamiento reales.
+\end{abstract}
+
+\section{Situación y alcance inicial}
+El problema no consiste solamente en mostrar el valor de una deuda. Cuando alguien realiza un pago, el municipio necesita recibir una confirmación confiable antes de registrar la obligación como cancelada. Si esa confirmación falla o llega dos veces, el portal no debería mostrar un resultado incorrecto.
+
+Para este ejercicio se propone que el portal permita consultar obligaciones de un predio, preparar el valor de pago, comunicarse con una pasarela local, confirmar el resultado y entregar un comprobante. También se considera la integración solicitada con el Servicio de Rentas Internas (SRI), aunque \textbf{no se presupone que exista una API disponible}: antes de implementarla se necesitaría revisar sus condiciones de acceso. Los valores de deuda, el catastro y las reglas municipales seguirían a cargo del GAD.
+
+\textbf{Límite de este avance:} se especifican necesidades preliminares y comportamientos esperados. No se ha desarrollado el software ni se han ejecutado pruebas. Los requisitos de calidad medibles, las restricciones y las dependencias se documentarán en las siguientes revisiones.
+
+\section{Partes interesadas y necesidades}
+Una parte interesada (\emph{stakeholder}) es una persona, grupo o entidad que usa, administra o afecta el sistema. Las necesidades de la Tabla~\ref{tab:actores} son hipótesis iniciales derivadas del caso; deberán confirmarse si se trabaja con un GAD real.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Actores y necesidades preliminares del caso}
+\label{tab:actores}
+\begin{tabularx}{\linewidth}{@{}p{3.85cm}Y@{}}
+\toprule
+\textbf{Actor} & \textbf{Necesidad preliminar}\\
+\midrule
+Contribuyente & Consultar las obligaciones de su predio, pagar en línea y obtener una constancia.\\
+Tesorería del GAD & Revisar pagos confirmados y evitar registros duplicados o sin respaldo.\\
+Catastro y Rentas & Proporcionar claves catastrales, saldos y reglas de cálculo aprobadas por el municipio.\\
+Pasarela de pagos local & Recibir una orden con identificador y monto y devolver el resultado de la transacción.\\
+SRI & Establecer, cuando corresponda, las condiciones autorizadas de consulta o intercambio de datos tributarios.\\
+Unidad de tecnología del GAD & Administrar permisos, integraciones y errores del portal.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Requisitos funcionales propuestos}
+Un \textbf{requisito funcional (RF)} describe una acción o respuesta observable del sistema. Para evitar frases vagas, cada enunciado utiliza «El sistema deberá» e indica la situación en la que ocurre la función. Los ejemplos de comprobación son \textbf{pruebas previstas}, no pruebas ya realizadas \cite{iso29148}.
+
+\rf{RF-01 · Consulta de obligaciones}{El sistema deberá mostrar al contribuyente autenticado las obligaciones pendientes del predio asociado a su cuenta cuando seleccione la clave catastral y el período fiscal, incluyendo concepto, valor y estado de cada obligación.}
+\prueba{Con un predio de prueba asociado al usuario y otro ajeno, comprobar que únicamente aparezcan los datos autorizados y que los importes coincidan con los registros de prueba del GAD.}
+
+\rf{RF-02 · Cálculo de monto}{El sistema deberá calcular el total exigible de las obligaciones que el contribuyente seleccione, aplicando los valores, descuentos o recargos vigentes que entregue el GAD para la fecha de consulta.}
+\prueba{Usar casos de prueba con montos y reglas previamente definidos por el municipio; comparar el total calculado con el resultado esperado.}
+
+\rf{RF-03 · Pago y confirmación}{El sistema deberá crear una orden de pago con identificador único y enviarla a la pasarela local cuando el contribuyente confirme la operación. Solo marcará la orden como pagada al recibir una respuesta válida que coincida con su identificador y monto; una confirmación repetida no deberá registrar otro pago.}
+\prueba{Simular una respuesta correcta, otra repetida y otra con monto distinto; comprobar que la orden se cancele una sola vez y que las respuestas inválidas no se acepten.}
+
+\rf{RF-04 · Comprobante de pago}{El sistema deberá permitir descargar un comprobante PDF cuando la orden haya quedado confirmada como pagada; el comprobante incluirá predio, valor, fecha y referencia de transacción.}
+\prueba{Comprobar que una orden confirmada genere el documento y que una orden pendiente o rechazada no genere constancia de pago realizado.}
+
+\rf{RF-05 · Integración condicionada con el SRI}{El sistema deberá consultar la información tributaria necesaria mediante un mecanismo autorizado del SRI, siempre que exista un servicio habilitado y un convenio aplicable al GAD. Si el servicio no está disponible, informará esa condición sin modificar la deuda municipal.}
+\prueba{Cuando se defina la interfaz real, probar una respuesta válida y una indisponibilidad controlada en un entorno autorizado; verificar que ninguna altere las obligaciones prediales.}
+
+\section{Aspectos pendientes de revisión}
+Para seguir desarrollando la propuesta es necesario determinar cuáles son las reglas oficiales de liquidación del GAD, cómo confirma los pagos la pasarela, y qué intercambio de información permite efectivamente el SRI. También faltan cinco requisitos no funcionales con métricas, su clasificación conforme a ISO/IEC 25010:2023, tres restricciones justificadas y dos dependencias. Esos elementos corresponden al documento completo, no a este avance inicial.
+
+\section*{Referencias}
+\printbibliography[heading=none]
+
+\noindent\footnotesize\textbf{Nota sobre asistencia de IA.} ChatGPT (OpenAI, GPT-6) ayudó a preparar esta propuesta de redacción y la plantilla LaTeX. Los requisitos son propuestas para revisar, no resultados de entrevistas o validaciones. La revisión y validación por parte del estudiante están pendientes. No se realizaron entrevistas ni pruebas del sistema.
+
+\end{document}
