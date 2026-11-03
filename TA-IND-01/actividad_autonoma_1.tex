@@ -1,6 +1,6 @@
 % Ingeniería de Requisitos (ISR-401) · UTEQ
 % TA-IND-01 · Caso hipotético de cobro predial
-% Borrador de trabajo: alcance, interesados y requisitos funcionales.
+% Borrador de trabajo: alcance, actores, RF y requisitos de calidad RNF.
 % Las decisiones técnicas y la redacción requieren revisión del estudiante.
 \documentclass[10pt,onecolumn]{IEEEtran}
 
@@ -29,17 +29,17 @@
 \newcommand{\prueba}[1]{\noindent{\footnotesize\textit{Comprobación propuesta:} #1}\par}
 
 \title{Requisitos iniciales para un sistema de cobro de impuestos prediales en línea\\
-\large TA-IND-01 · Avance técnico 1 (borrador)}
+\large TA-IND-01 · Avance técnico 2 (borrador)}
 \author{Cedeño Avila Winston Damian\\
 {\small Universidad Técnica Estatal de Quevedo · Facultad de Ciencias de la Computación}\\
 {\small Ingeniería de Software · Cuarto nivel «B» · Ingeniería de Requisitos (ISR-401)}\\
-{\small 1 de noviembre de 2026}}
+{\small 2 de noviembre de 2026}}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Este documento presenta un primer análisis de un caso propuesto en clase: un GAD cantonal necesita un portal para consultar y pagar impuestos prediales en línea. En esta versión se identifica a los actores que intervienen, se delimita el alcance y se proponen cinco requisitos funcionales. Se toman como referencia las orientaciones de ISO/IEC/IEEE 29148:2018 para expresar comportamientos que después puedan comprobarse \cite{iso29148}. El GAD es hipotético y, por el momento, no se cuenta con entrevistas, contratos ni datos de funcionamiento reales.
+Este segundo avance analiza un caso de clase: un GAD cantonal necesita un portal para consultar y pagar impuestos prediales en línea. Se mantienen el alcance preliminar, seis partes interesadas y cinco requisitos funcionales del primer borrador. Ahora se incorporan cinco requisitos no funcionales con objetivos numéricos, condiciones de medición y métodos de verificación propuestos, utilizando ISO/IEC/IEEE 29148:2018 e ISO/IEC 25010:2023 como referencias \cite{iso29148,iso25010}. El GAD es hipotético: todavía no hay entrevistas ni resultados de pruebas reales.
 \end{abstract}
 
 \section{Situación y alcance inicial}
@@ -47,7 +47,7 @@ El problema no consiste solamente en mostrar el valor de una deuda. Cuando algui
 
 Para este ejercicio se propone que el portal permita consultar obligaciones de un predio, preparar el valor de pago, comunicarse con una pasarela local, confirmar el resultado y entregar un comprobante. También se considera la integración solicitada con el Servicio de Rentas Internas (SRI), aunque \textbf{no se presupone que exista una API disponible}: antes de implementarla se necesitaría revisar sus condiciones de acceso. Los valores de deuda, el catastro y las reglas municipales seguirían a cargo del GAD.
 
-\textbf{Límite de este avance:} se especifican necesidades preliminares y comportamientos esperados. No se ha desarrollado el software ni se han ejecutado pruebas. Los requisitos de calidad medibles, las restricciones y las dependencias se documentarán en las siguientes revisiones.
+\textbf{Límite de este avance:} se han especificado funciones y objetivos de calidad para un caso hipotético. Los valores medibles son \textbf{metas académicas propuestas}, no cifras obtenidas de un GAD. No se ha desarrollado el sistema, ejecutado pruebas ni confirmado convenios con proveedores. Las restricciones y dependencias se revisarán después.
 
 \section{Partes interesadas y necesidades}
 Una parte interesada (\emph{stakeholder}) es una persona, grupo o entidad que usa, administra o afecta el sistema. Las necesidades de la Tabla~\ref{tab:actores} son hipótesis iniciales derivadas del caso; deberán confirmarse si se trabaja con un GAD real.
@@ -89,12 +89,33 @@ Un \textbf{requisito funcional (RF)} describe una acción o respuesta observable
 \rf{RF-05 · Integración condicionada con el SRI}{El sistema deberá consultar la información tributaria necesaria mediante un mecanismo autorizado del SRI, siempre que exista un servicio habilitado y un convenio aplicable al GAD. Si el servicio no está disponible, informará esa condición sin modificar la deuda municipal.}
 \prueba{Cuando se defina la interfaz real, probar una respuesta válida y una indisponibilidad controlada en un entorno autorizado; verificar que ninguna altere las obligaciones prediales.}
 
+\section{Requisitos no funcionales y calidad}
+A diferencia de los RF, que indican \emph{qué} operaciones realiza el portal, los \textbf{requisitos no funcionales (RNF)} señalan \emph{con qué nivel de calidad} debe funcionar. ISO/IEC 25010:2023 establece nueve características de calidad: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad y seguridad operacional (\emph{safety}) \cite{iso25010}. Para este caso se seleccionan cinco características diferentes por su relación con consultas, pagos y atención ciudadana.
+
+\rf{RNF-01 · Eficiencia de desempeño}{Con 100 usuarios virtuales concurrentes durante 30 minutos y una base de ensayo de 25\,000 predios \emph{simulados}, el 95\,\% de las consultas de obligaciones deberá completarse en 3 segundos o menos.}
+\prueba{Métrica: percentil 95 (p95) del tiempo de respuesta, en segundos; objetivo: p95 $\leq 3$ s. Método: prueba de carga propuesta con JMeter, registrando únicamente consultas válidas y tiempos de respuesta del servidor.}
+
+\rf{RNF-02 · Fiabilidad}{Durante un piloto de 30 días, el portal deberá alcanzar al menos un 99,5\,\% de consultas sintéticas exitosas al servicio de obligaciones prediales, con una solicitud automatizada cada minuto desde un punto externo.}
+\prueba{Métrica: (consultas sintéticas correctas / consultas programadas)$\times100$; objetivo: $\geq 99{,}5$\,\%. Método: monitorización propuesta por 30 días; una consulta será correcta solo si devuelve el estado HTTP y los datos esperados.}
+
+\rf{RNF-03 · Seguridad}{El portal deberá rechazar el 100\,\% de un conjunto de 150 intentos de consulta de predios o comprobantes sin autorización, usando cuentas y predios de ensayo con permisos conocidos.}
+\prueba{Métrica: (intentos indebidos rechazados / 150)$\times100$; objetivo: 100\,\% en la batería definida. Método: pruebas automatizadas de autorización, incluyendo acceso directo a identificadores ajenos. Aprobar estos casos no equivale a demostrar ausencia total de vulnerabilidades.}
+
+\rf{RNF-04 · Capacidad de interacción}{Al menos 18 de 20 ciudadanos que utilicen por primera vez un prototipo funcional deberán poder consultar el saldo de un predio de ensayo en 120 segundos o menos, sin recibir ayuda, desde un teléfono móvil con conexión estable.}
+\prueba{Métrica: participantes que terminan dentro de 120 s / 20 $\times100$; objetivo: $\geq 90$\,\%. Método: prueba de usabilidad propuesta con cronómetro, instrucciones iguales para todos y registro anónimo del éxito o error de cada participante.}
+
+\rf{RNF-05 · Compatibilidad / interoperabilidad}{Cuando exista un contrato de integración aprobado y un ambiente de pruebas de la pasarela local, el portal deberá interpretar correctamente las 50 respuestas válidas del conjunto de homologación, respetando sus identificadores, importes y estados.}
+\prueba{Métrica: mensajes válidos procesados conforme al contrato / 50 $\times100$; objetivo: 100\,\% del conjunto definido. Método: pruebas de integración propuestas en entorno de homologación con mensajes preparados según la documentación real del proveedor; la interfaz todavía no se conoce.}
+
+\subsection{Justificación de las metas}
+El tiempo máximo de 3 s pretende que una consulta no obligue al ciudadano a esperar demasiado; los 100 usuarios y 25\,000 predios son valores de prueba para este ejercicio, no datos oficiales ni una estimación validada de la carga real. La disponibilidad del 99,5\,\% se plantea como punto de negociación. Para autorizaciones e interoperabilidad se exige un 100\,\% \textbf{solo en los casos de ensayo definidos}. La meta de usabilidad equivale a que al menos 18 de 20 personas completen la consulta sin asistencia. Estos valores deberán ajustarse con los responsables del GAD cuando se conozcan los recursos y las necesidades reales.
+
 \section{Aspectos pendientes de revisión}
-Para seguir desarrollando la propuesta es necesario determinar cuáles son las reglas oficiales de liquidación del GAD, cómo confirma los pagos la pasarela, y qué intercambio de información permite efectivamente el SRI. También faltan cinco requisitos no funcionales con métricas, su clasificación conforme a ISO/IEC 25010:2023, tres restricciones justificadas y dos dependencias. Esos elementos corresponden al documento completo, no a este avance inicial.
+Aún deben formularse y justificarse las tres restricciones y las dos dependencias pedidas por la guía. Además, antes de convertir esta propuesta en una especificación aprobada, sería necesario confirmar las reglas municipales de cobro, el contrato de la pasarela, la posibilidad real de integración con el SRI y los umbrales de calidad con los responsables del GAD. \textbf{No se han aplicado pruebas de carga, seguridad, usabilidad ni disponibilidad}: por ahora solamente están definidos sus métodos de verificación.
 
 \section*{Referencias}
 \printbibliography[heading=none]
 
-\noindent\footnotesize\textbf{Nota sobre asistencia de IA.} ChatGPT (OpenAI, GPT-6) ayudó a preparar esta propuesta de redacción y la plantilla LaTeX. Los requisitos son propuestas para revisar, no resultados de entrevistas o validaciones. La revisión y validación por parte del estudiante están pendientes. No se realizaron entrevistas ni pruebas del sistema.
+\noindent\footnotesize\textbf{Nota sobre asistencia de IA.} ChatGPT (OpenAI, GPT-6) se utilizó para elaborar el borrador técnico, proponer métricas de calidad y dar soporte a la edición LaTeX. Las metas numéricas no son mediciones reales y deben revisarse por el estudiante; no se realizaron entrevistas ni pruebas del sistema.
 
 \end{document}
