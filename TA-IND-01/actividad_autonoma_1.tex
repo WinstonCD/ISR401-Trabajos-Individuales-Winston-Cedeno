@@ -1,6 +1,6 @@
 % Ingeniería de Requisitos (ISR-401) · UTEQ
 % TA-IND-01 · Caso hipotético de cobro predial
-% Borrador de trabajo: alcance, actores, RF y requisitos de calidad RNF.
+% Borrador de trabajo: RF, RNF, restricciones, dependencias y trazabilidad.
 % Las decisiones técnicas y la redacción requieren revisión del estudiante.
 \documentclass[10pt,onecolumn]{IEEEtran}
 
@@ -14,6 +14,7 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{enumitem}
+\usepackage{needspace}
 \usepackage[hidelinks]{hyperref}
 \usepackage[backend=biber,style=ieee,sorting=none]{biblatex}
 \addbibresource{referencias.bib}
@@ -29,17 +30,17 @@
 \newcommand{\prueba}[1]{\noindent{\footnotesize\textit{Comprobación propuesta:} #1}\par}
 
 \title{Requisitos iniciales para un sistema de cobro de impuestos prediales en línea\\
-\large TA-IND-01 · Avance técnico 2 (borrador)}
+\large TA-IND-01 · Avance técnico 3 (borrador)}
 \author{Cedeño Avila Winston Damian\\
 {\small Universidad Técnica Estatal de Quevedo · Facultad de Ciencias de la Computación}\\
 {\small Ingeniería de Software · Cuarto nivel «B» · Ingeniería de Requisitos (ISR-401)}\\
-{\small 2 de noviembre de 2026}}
+{\small 3 de noviembre de 2026}}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Este segundo avance analiza un caso de clase: un GAD cantonal necesita un portal para consultar y pagar impuestos prediales en línea. Se mantienen el alcance preliminar, seis partes interesadas y cinco requisitos funcionales del primer borrador. Ahora se incorporan cinco requisitos no funcionales con objetivos numéricos, condiciones de medición y métodos de verificación propuestos, utilizando ISO/IEC/IEEE 29148:2018 e ISO/IEC 25010:2023 como referencias \cite{iso29148,iso25010}. El GAD es hipotético: todavía no hay entrevistas ni resultados de pruebas reales.
+Se plantea una especificación inicial para el cobro de impuestos prediales en línea de un GAD cantonal hipotético. El borrador reúne seis partes interesadas, cinco requisitos funcionales, cinco requisitos de calidad con métricas, tres restricciones y dos dependencias. Se agrega una matriz sencilla para relacionar necesidades, requisitos y formas de comprobación. La redacción toma como referencias ISO/IEC/IEEE 29148:2018 e ISO/IEC 25010:2023 \cite{iso29148,iso25010}. Los umbrales son propuestas académicas; no se han hecho entrevistas ni pruebas reales.
 \end{abstract}
 
 \section{Situación y alcance inicial}
@@ -47,7 +48,7 @@ El problema no consiste solamente en mostrar el valor de una deuda. Cuando algui
 
 Para este ejercicio se propone que el portal permita consultar obligaciones de un predio, preparar el valor de pago, comunicarse con una pasarela local, confirmar el resultado y entregar un comprobante. También se considera la integración solicitada con el Servicio de Rentas Internas (SRI), aunque \textbf{no se presupone que exista una API disponible}: antes de implementarla se necesitaría revisar sus condiciones de acceso. Los valores de deuda, el catastro y las reglas municipales seguirían a cargo del GAD.
 
-\textbf{Límite de este avance:} se han especificado funciones y objetivos de calidad para un caso hipotético. Los valores medibles son \textbf{metas académicas propuestas}, no cifras obtenidas de un GAD. No se ha desarrollado el sistema, ejecutado pruebas ni confirmado convenios con proveedores. Las restricciones y dependencias se revisarán después.
+\textbf{Límite del ejercicio:} los requisitos y sus umbrales son \textbf{propuestas académicas}, no resultados ni decisiones aprobadas por un municipio. No se ha desarrollado el sistema, ejecutado pruebas ni comprobado la existencia de convenios con proveedores. Las restricciones y dependencias siguientes deberán validarse con responsables reales si el proyecto se implementa.
 
 \section{Partes interesadas y necesidades}
 Una parte interesada (\emph{stakeholder}) es una persona, grupo o entidad que usa, administra o afecta el sistema. Las necesidades de la Tabla~\ref{tab:actores} son hipótesis iniciales derivadas del caso; deberán confirmarse si se trabaja con un GAD real.
@@ -104,14 +105,58 @@ A diferencia de los RF, que indican \emph{qué} operaciones realiza el portal, l
 \rf{RNF-04 · Capacidad de interacción}{Al menos 18 de 20 ciudadanos que utilicen por primera vez un prototipo funcional deberán poder consultar el saldo de un predio de ensayo en 120 segundos o menos, sin recibir ayuda, desde un teléfono móvil con conexión estable.}
 \prueba{Métrica: participantes que terminan dentro de 120 s / 20 $\times100$; objetivo: $\geq 90$\,\%. Método: prueba de usabilidad propuesta con cronómetro, instrucciones iguales para todos y registro anónimo del éxito o error de cada participante.}
 
+\Needspace{7\baselineskip}
 \rf{RNF-05 · Compatibilidad / interoperabilidad}{Cuando exista un contrato de integración aprobado y un ambiente de pruebas de la pasarela local, el portal deberá interpretar correctamente las 50 respuestas válidas del conjunto de homologación, respetando sus identificadores, importes y estados.}
 \prueba{Métrica: mensajes válidos procesados conforme al contrato / 50 $\times100$; objetivo: 100\,\% del conjunto definido. Método: pruebas de integración propuestas en entorno de homologación con mensajes preparados según la documentación real del proveedor; la interfaz todavía no se conoce.}
 
 \subsection{Justificación de las metas}
 El tiempo máximo de 3 s pretende que una consulta no obligue al ciudadano a esperar demasiado; los 100 usuarios y 25\,000 predios son valores de prueba para este ejercicio, no datos oficiales ni una estimación validada de la carga real. La disponibilidad del 99,5\,\% se plantea como punto de negociación. Para autorizaciones e interoperabilidad se exige un 100\,\% \textbf{solo en los casos de ensayo definidos}. La meta de usabilidad equivale a que al menos 18 de 20 personas completen la consulta sin asistencia. Estos valores deberán ajustarse con los responsables del GAD cuando se conozcan los recursos y las necesidades reales.
 
-\section{Aspectos pendientes de revisión}
-Aún deben formularse y justificarse las tres restricciones y las dos dependencias pedidas por la guía. Además, antes de convertir esta propuesta en una especificación aprobada, sería necesario confirmar las reglas municipales de cobro, el contrato de la pasarela, la posibilidad real de integración con el SRI y los umbrales de calidad con los responsables del GAD. \textbf{No se han aplicado pruebas de carga, seguridad, usabilidad ni disponibilidad}: por ahora solamente están definidos sus métodos de verificación.
+\section{Restricciones propuestas}
+Una restricción limita las opciones de solución: define condiciones que el sistema debe respetar incluso si técnicamente pudiera hacerse de otra manera. En este caso no se han confirmado políticas del GAD ni contratos externos; estas tres reglas son propuestas que deben validarse con la entidad antes de pasar a diseño.
+
+\rf{R-01 · Fuente oficial de valores}{El portal utilizará exclusivamente el catastro, los títulos de crédito y los parámetros de cálculo suministrados o aprobados por el GAD; no podrá modificar por su cuenta tasas, descuentos ni recargos. \textit{Afecta:} RF-01 y RF-02.}
+\noindent\textit{Justificación:} si la página calcula con reglas distintas a las de Tesorería, un ciudadano podría pagar un monto incorrecto. La regla municipal es la fuente autorizada, no el portal.\par
+
+\rf{R-02 · Pago por proveedor contratado}{Las órdenes de cobro se enviarán únicamente a la pasarela local formalmente contratada y el portal no almacenará números completos de tarjeta ni códigos de seguridad. \textit{Afecta:} RF-03, RNF-03 y RNF-05.}
+\noindent\textit{Justificación:} la función del GAD es registrar una obligación pagada a partir de una confirmación válida, no operar como procesador bancario ni almacenar credenciales de pago. La API y sus respuestas dependerán del contrato real.\par
+
+\rf{R-03 · Integración autorizada con el SRI}{La integración tributaria se limitará a consultas o intercambios expresamente habilitados para el GAD mediante una interfaz autorizada. Sin esa autorización, la función dependiente del SRI no se activará y la deuda predial seguirá bajo control municipal. \textit{Afecta:} RF-05.}
+\noindent\textit{Justificación:} que el caso mencione al SRI no significa que exista una API pública específica ni que un recibo municipal equivalga a un comprobante autorizado por el SRI. Se debe confirmar el servicio disponible antes de prometer su implementación.\par
+
+\section{Dependencias entre requisitos}
+Una dependencia indica que el resultado de un requisito necesita que otro se cumpla antes. Se identifican dos relaciones directas que ordenan el proceso de pago.
+
+\rf{D-01 · RF-03 depende de RF-02}{Antes de crear la orden de pago (RF-03), el sistema debe tener calculado el monto exigible de la obligación (RF-02).}
+\noindent\textit{Justificación:} no sería correcto enviar a la pasarela una cantidad sin comprobar previamente descuentos, recargos y fecha de cálculo. \textit{Comprobación prevista:} intentar confirmar una orden sin liquidación válida y verificar que no se envíe.\par
+
+\rf{D-02 · RF-04 depende de RF-03}{Para emitir un comprobante de pago realizado (RF-04), debe existir una confirmación de la pasarela aceptada conforme a RF-03.}
+\noindent\textit{Justificación:} el comprobante no puede indicar «pagado» mientras el banco mantenga la transacción pendiente o rechazada. \textit{Comprobación prevista:} simular esos estados y verificar que solo la confirmación válida permita descargar el comprobante.\par
+
+\section{Trazabilidad y revisión de coherencia}
+La Tabla~\ref{tab:traza} relaciona las necesidades de los actores con los requisitos y las verificaciones propuestas. La matriz identifica \textbf{qué se debería comprobar}; no afirma que se hayan ejecutado las pruebas.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Vínculos entre necesidades y requisitos de la propuesta}
+\label{tab:traza}
+\begin{tabularx}{\linewidth}{@{}p{2.8cm}p{2.1cm}Y@{}}
+\toprule
+\textbf{Necesidad / actor} & \textbf{IDs} & \textbf{Qué comprobar en una prueba futura}\\
+\midrule
+Consultar deuda (contribuyente, Catastro) & RF-01, RNF-01, R-01 & Consulta autorizada y tiempos de respuesta con carga definida.\\
+Calcular el valor (Catastro, Tesorería) & RF-02, R-01, D-01 & Aplicación de reglas vigentes y bloqueo del pago sin liquidación.\\
+Pagar sin duplicados (Tesorería, pasarela) & RF-03, RNF-03, RNF-05, R-02 & Confirmación única, control de permisos y mensajes de la pasarela.\\
+Obtener constancia (contribuyente) & RF-04, D-02 & Ausencia de comprobante para pagos rechazados o pendientes.\\
+Consultar un servicio tributario habilitado (SRI) & RF-05, R-03 & Manejo de respuesta autorizada y de indisponibilidad sin cambiar el saldo.\\
+Uso continuo y sencillo (ciudadanía, tecnología) & RNF-02, RNF-04 & Disponibilidad sintética y finalización de tareas sin ayuda.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Revisión que todavía falta}
+Antes de considerar aprobada esta especificación habría que contrastar las reglas del GAD, la pasarela contratada, los permisos de integración con el SRI y la viabilidad de los umbrales. Las comprobaciones descritas son \textbf{planes de prueba}. Ninguna se ha ejecutado con un sistema real. También corresponde una última revisión de claridad, bibliografía, trazabilidad y compilación antes de la entrega.
 
 \section*{Referencias}
 \printbibliography[heading=none]
