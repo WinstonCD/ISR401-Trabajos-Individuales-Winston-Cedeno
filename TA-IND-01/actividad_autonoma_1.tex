@@ -1,7 +1,3 @@
-% Ingeniería de Requisitos (ISR-401) · UTEQ
-% TA-IND-01 · Caso hipotético de cobro predial
-% Borrador de trabajo: RF, RNF, restricciones, dependencias y trazabilidad.
-% Las decisiones técnicas y la redacción requieren revisión del estudiante.
 \documentclass[10pt,onecolumn]{IEEEtran}
 
 \usepackage[T1]{fontenc}
@@ -30,17 +26,17 @@
 \newcommand{\prueba}[1]{\noindent{\footnotesize\textit{Comprobación propuesta:} #1}\par}
 
 \title{Requisitos iniciales para un sistema de cobro de impuestos prediales en línea\\
-\large TA-IND-01 · Avance técnico 3 (borrador)}
+\large TA-IND-01 · Revisión técnica del 5 de noviembre de 2026}
 \author{Cedeño Avila Winston Damian\\
 {\small Universidad Técnica Estatal de Quevedo · Facultad de Ciencias de la Computación}\\
 {\small Ingeniería de Software · Cuarto nivel «B» · Ingeniería de Requisitos (ISR-401)}\\
-{\small 3 de noviembre de 2026}}
+{\small 5 de noviembre de 2026}}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Se plantea una especificación inicial para el cobro de impuestos prediales en línea de un GAD cantonal hipotético. El borrador reúne seis partes interesadas, cinco requisitos funcionales, cinco requisitos de calidad con métricas, tres restricciones y dos dependencias. Se agrega una matriz sencilla para relacionar necesidades, requisitos y formas de comprobación. La redacción toma como referencias ISO/IEC/IEEE 29148:2018 e ISO/IEC 25010:2023 \cite{iso29148,iso25010}. Los umbrales son propuestas académicas; no se han hecho entrevistas ni pruebas reales.
+Se presenta una especificación inicial para el cobro de impuestos prediales en línea de un GAD cantonal hipotético. El documento reúne seis partes interesadas, cinco requisitos funcionales, cinco requisitos de calidad con métricas, tres restricciones y dos dependencias. Se agrega una matriz sencilla para relacionar necesidades, requisitos y formas de comprobación. La redacción toma como referencias ISO/IEC/IEEE 29148:2018 e ISO/IEC 25010:2023 \cite{iso29148,iso25010}. Los umbrales son propuestas académicas; no se han hecho entrevistas ni pruebas reales.
 \end{abstract}
 
 \section{Situación y alcance inicial}
@@ -81,14 +77,14 @@ Un \textbf{requisito funcional (RF)} describe una acción o respuesta observable
 \rf{RF-02 · Cálculo de monto}{El sistema deberá calcular el total exigible de las obligaciones que el contribuyente seleccione, aplicando los valores, descuentos o recargos vigentes que entregue el GAD para la fecha de consulta.}
 \prueba{Usar casos de prueba con montos y reglas previamente definidos por el municipio; comparar el total calculado con el resultado esperado.}
 
-\rf{RF-03 · Pago y confirmación}{El sistema deberá crear una orden de pago con identificador único y enviarla a la pasarela local cuando el contribuyente confirme la operación. Solo marcará la orden como pagada al recibir una respuesta válida que coincida con su identificador y monto; una confirmación repetida no deberá registrar otro pago.}
+\rf{RF-03 · Pago y confirmación}{El sistema deberá enviar a la pasarela local una orden de pago con identificador único e importe previamente calculado cuando el contribuyente confirme la operación. Cambiará el estado a «pagado» únicamente si recibe una confirmación que coincida con ese identificador y monto. Si la confirmación se repite, conservará un solo registro de pago.}
 \prueba{Simular una respuesta correcta, otra repetida y otra con monto distinto; comprobar que la orden se cancele una sola vez y que las respuestas inválidas no se acepten.}
 
 \rf{RF-04 · Comprobante de pago}{El sistema deberá permitir descargar un comprobante PDF cuando la orden haya quedado confirmada como pagada; el comprobante incluirá predio, valor, fecha y referencia de transacción.}
 \prueba{Comprobar que una orden confirmada genere el documento y que una orden pendiente o rechazada no genere constancia de pago realizado.}
 
-\rf{RF-05 · Integración condicionada con el SRI}{El sistema deberá consultar la información tributaria necesaria mediante un mecanismo autorizado del SRI, siempre que exista un servicio habilitado y un convenio aplicable al GAD. Si el servicio no está disponible, informará esa condición sin modificar la deuda municipal.}
-\prueba{Cuando se defina la interfaz real, probar una respuesta válida y una indisponibilidad controlada en un entorno autorizado; verificar que ninguna altere las obligaciones prediales.}
+\rf{RF-05 · Consulta tributaria condicionada al SRI}{Cuando el GAD disponga de una interfaz del SRI formalmente habilitada para consultar información tributaria relacionada con un contribuyente identificado por RUC, el sistema deberá registrar la fecha, el identificador de la consulta y el resultado recibido (exitoso, rechazado o no disponible), y mostrarlo a un funcionario autorizado. Si el servicio no está habilitado o falla, informará la situación sin modificar las obligaciones ni los pagos municipales.}
+\prueba{En un entorno de ensayo con respuestas simuladas según un contrato de interfaz por confirmar, comprobar los tres resultados posibles, la autorización del funcionario y la ausencia de cambios en deuda y pagos. Esta prueba no demuestra que la API exista o esté habilitada.}
 
 \section{Requisitos no funcionales y calidad}
 A diferencia de los RF, que indican \emph{qué} operaciones realiza el portal, los \textbf{requisitos no funcionales (RNF)} señalan \emph{con qué nivel de calidad} debe funcionar. ISO/IEC 25010:2023 establece nueve características de calidad: adecuación funcional, eficiencia de desempeño, compatibilidad, capacidad de interacción, fiabilidad, seguridad, mantenibilidad, flexibilidad y seguridad operacional (\emph{safety}) \cite{iso25010}. Para este caso se seleccionan cinco características diferentes por su relación con consultas, pagos y atención ciudadana.
@@ -155,12 +151,12 @@ Uso continuo y sencillo (ciudadanía, tecnología) & RNF-02, RNF-04 & Disponibil
 \end{tabularx}
 \end{table}
 
-\section{Revisión que todavía falta}
-Antes de considerar aprobada esta especificación habría que contrastar las reglas del GAD, la pasarela contratada, los permisos de integración con el SRI y la viabilidad de los umbrales. Las comprobaciones descritas son \textbf{planes de prueba}. Ninguna se ha ejecutado con un sistema real. También corresponde una última revisión de claridad, bibliografía, trazabilidad y compilación antes de la entrega.
+\section{Aspectos pendientes de validación}
+Antes de adoptar estos requisitos en un GAD real, se deben confirmar las reglas municipales, el contrato de la pasarela, la autorización de acceso a servicios del SRI y la viabilidad de las metas de calidad. Las comprobaciones descritas son \textbf{planes de prueba}; ninguna se ha ejecutado sobre un sistema municipal.
 
 \section*{Referencias}
 \printbibliography[heading=none]
 
-\noindent\footnotesize\textbf{Nota sobre asistencia de IA.} ChatGPT (OpenAI, GPT-6) se utilizó para elaborar el borrador técnico, proponer métricas de calidad y dar soporte a la edición LaTeX. Las metas numéricas no son mediciones reales y deben revisarse por el estudiante; no se realizaron entrevistas ni pruebas del sistema.
+\noindent\footnotesize\textbf{Declaración de uso de IA.} Se utilizó ChatGPT (OpenAI, GPT-6) como apoyo para la redacción, la propuesta de métricas y la edición en LaTeX. El contenido fue revisado antes de su presentación. Las métricas son objetivos académicos; no se realizaron entrevistas ni pruebas de un sistema municipal.
 
 \end{document}
