@@ -1,0 +1,120 @@
+\documentclass[10pt,a4paper,onecolumn]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern,microtype,csquotes}
+\usepackage{longtable,tabularx,array,booktabs,enumitem,needspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=ieee,sorting=none]{biblatex}
+\addbibresource{referencias.bib}
+\DefineBibliographyStrings{spanish}{bibliography={Referencias}}
+\urlstyle{same}
+\setlength{\parindent}{0.65em}
+\setlength{\parskip}{2pt}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\newcolumntype{Z}{>{\raggedright\arraybackslash}X}
+
+\title{Identificación y clasificación de tipos de requisitos\\
+\large FORM-TL-01 · Plataforma de gestión de citas médicas}
+\author{Cedeño Avila Winston Damian\\
+{\small Universidad Técnica Estatal de Quevedo · Facultad de Ciencias de la Computación}\\
+{\small Ingeniería de Software · Cuarto nivel «B» · Ingeniería de Requisitos (ISR-401)}\\
+{\small 5 de noviembre de 2026}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Este taller clasifica veinte enunciados de un sistema de citas médicas según su tipo y las dimensiones producto/proceso y sistema/software. También se mejoran cinco requisitos vagos con métricas y umbrales propuestos. Se emplean como referencia ISO/IEC/IEEE 29148:2018 e ISO/IEC 25010:2023 \cite{iso29148,iso25010}.
+\end{abstract}
+
+\section{Contexto y criterios de clasificación}
+El policlínico del caso organiza citas por teléfono y hojas de cálculo. Se propone una plataforma que gestione turnos y se comunique con su sistema de facturación actual. Un requisito \textbf{funcional} describe una acción del sistema; uno de \textbf{calidad} indica qué tan bien debería funcionar; una \textbf{restricción} limita la solución o su desarrollo. Una \textbf{regla de dominio} proviene de las normas internas de atención, como considerar inasistencia una cancelación tardía \cite{iso29148,pohl2025}.
+
+\textbf{Producto/proceso} distingue lo exigido a la solución de lo exigido al trabajo de desarrollo. \textbf{Sistema/software} distingue el conjunto con personas, equipos y servicios externos de la aplicación. En reglas puramente de proceso se usa \emph{N/A}. Se señala el criterio principal; algunos casos admiten otra lectura razonada.
+
+\section{Clasificación de los veinte enunciados}
+\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.8cm}>{\raggedright\arraybackslash}p{5.25cm}>{\raggedright\arraybackslash}p{4.55cm}>{\raggedright\arraybackslash}p{4.55cm}@{}}
+\toprule
+\textbf{ID}&\textbf{Enunciado del caso}&\textbf{Tres dimensiones de clasificación}&\textbf{Justificación breve}\tabularnewline\midrule
+\endfirsthead
+\toprule
+\textbf{ID}&\textbf{Enunciado del caso}&\textbf{Tres dimensiones de clasificación}&\textbf{Justificación breve}\tabularnewline\midrule
+\endhead
+\bottomrule
+\endfoot
+\textbf{E01} & El paciente podrá reservar una cita eligiendo especialidad, médico, fecha y hora entre los horarios disponibles. & \textbf{Funcional}\newline \emph{Producto · Software} & La reserva es una acción concreta que realiza el paciente en el programa. \\ \midrule
+\textbf{E02} & La plataforma enviará al paciente un recordatorio por mensaje de texto 24 horas antes de su cita. & \textbf{Funcional}\newline \emph{Producto · Sistema} & Indica el envío de un aviso y necesita el servicio externo de SMS. \\ \midrule
+\textbf{E03} & La aplicación debe ser rápida. & \textbf{Calidad}\newline eficiencia de desempeño / comportamiento temporal\newline \emph{Producto · Software} & Pide rapidez sin indicar en cuántos segundos debe responder. \\ \midrule
+\textbf{E04} & El recepcionista podrá registrar la llegada del paciente que se acerca a la ventanilla. & \textbf{Funcional}\newline \emph{Producto · Software} & La recepcionista cambia el estado de llegada en el sistema. \\ \midrule
+\textbf{E05} & La plataforma se desarrollará en Java 21 con base de datos PostgreSQL, tecnologías que domina el área de TI. & \textbf{Restricción tecnológica}\newline \emph{Producto · Software} & Obliga a usar Java y PostgreSQL; no describe una función del usuario. \\ \midrule
+\textbf{E06} & El médico podrá consultar la lista de pacientes del día y marcar cada consulta como atendida. & \textbf{Funcional}\newline \emph{Producto · Software} & El médico consulta su agenda y registra una consulta atendida. \\ \midrule
+\textbf{E07} & Los datos de salud de los pacientes deben estar seguros. & \textbf{Calidad}\newline seguridad / confidencialidad\newline \emph{Producto · Sistema} & Se refiere a información médica, pero no señala qué protección medir. \\ \midrule
+\textbf{E08} & La aplicación móvil debe funcionar en teléfonos con Android 10 o superior. & \textbf{Restricción de plataforma}\newline \emph{Producto · Software} & Acota los dispositivos móviles admitidos por la aplicación. \\ \midrule
+\textbf{E09} & Una cita cancelada con menos de cuatro horas de anticipación se registrará como inasistencia. & \textbf{Funcional (regla de dominio)}\newline \emph{Producto · Software} & Es una regla del negocio que el sistema debe aplicar al cancelar. \\ \midrule
+\textbf{E10} & La plataforma debe ser fácil de usar para los pacientes adultos mayores. & \textbf{Calidad}\newline capacidad de interacción / inclusividad\newline \emph{Producto · Software} & No indica qué tarea debe completar el paciente ni en cuánto tiempo. \\ \midrule
+\textbf{E11} & El proyecto debe entregarse en un plazo máximo de seis meses. & \textbf{Restricción de plazo}\newline \emph{Proceso · N/A} & Establece un plazo para desarrollar y entregar el proyecto. \\ \midrule
+\textbf{E12} & La sesión de un usuario se cerrará automáticamente tras 10 minutos sin actividad. & \textbf{Funcional (control de seguridad)}\newline \emph{Producto · Software} & La aplicación debe cerrar la sesión tras un tiempo definido. \\ \midrule
+\textbf{E13} & El quiosco de la sala de espera leerá el número de cédula ingresado en su pantalla táctil e imprimirá un ticket con el número de turno. & \textbf{Funcional}\newline \emph{Producto · Sistema} & El resultado depende del software, la pantalla y la impresora. \\ \midrule
+\textbf{E14} & La plataforma debe estar siempre disponible. & \textbf{Calidad}\newline fiabilidad / disponibilidad\newline \emph{Producto · Sistema} & «Siempre» no indica un porcentaje ni un período para comprobarlo. \\ \midrule
+\textbf{E15} & El director médico podrá generar un reporte mensual de inasistencias por especialidad. & \textbf{Funcional}\newline \emph{Producto · Software} & El director solicita un reporte concreto que genera la aplicación. \\ \midrule
+\textbf{E16} & Cada incremento se validará con el director médico al final de cada iteración de dos semanas. & \textbf{Restricción de proceso}\newline \emph{Proceso · N/A} & Indica cuándo y con quién debe revisarse cada incremento. \\ \midrule
+\textbf{E17} & El tratamiento de los datos personales de los pacientes debe cumplir la Ley Orgánica de Protección de Datos Personales del Ecuador. & \textbf{Restricción legal}\newline \emph{Producto · Sistema} & La ley condiciona cómo se tratan los datos personales. \\ \midrule
+\textbf{E18} & La plataforma debe integrarse sin problemas con el sistema de facturación actual. & \textbf{Calidad}\newline compatibilidad / interoperabilidad\newline \emph{Producto · Sistema} & Debe intercambiar datos con otro sistema, pero no define el éxito. \\ \midrule
+\textbf{E19} & Si el servidor principal falla, la plataforma debe restablecer el servicio en menos de 30 minutos sin perder ninguna cita confirmada. & \textbf{Calidad}\newline fiabilidad / recuperabilidad\newline \emph{Producto · Sistema} & Fija 30 minutos para recuperarse y conservar las citas confirmadas. \\ \midrule
+\textbf{E20} & Todo cambio en el código fuente será revisado por otro integrante del equipo antes de integrarse a la rama principal. & \textbf{Restricción de proceso}\newline \emph{Proceso · N/A} & Establece una revisión previa de los cambios durante el desarrollo. \\ \midrule
+\end{longtable}
+\normalsize
+\section{Reescritura de cinco requisitos de calidad}
+Los enunciados E03, E07, E10, E14 y E18 tienen expresiones como «rápida», «segura» y «sin problemas», que no permiten decidir cuándo se cumplen. Las siguientes cifras son \textbf{metas propuestas para el ejercicio}, no mediciones del policlínico.
+
+\Needspace{5\baselineskip}
+\noindent\textbf{E03 — Eficiencia de desempeño (comportamiento temporal).} La plataforma deberá mostrar los horarios disponibles para una especialidad en \textbf{3 segundos o menos para el 95\% de las consultas válidas}, con \textbf{300 usuarios concurrentes} durante \textbf{30 minutos}.
+
+\noindent{\footnotesize\textit{Métrica y prueba prevista:} percentil 95 del tiempo de respuesta, en segundos; p95 $\leq 3$ s. Prueba de carga con registros de respuesta.}\par
+
+\Needspace{5\baselineskip}
+\noindent\textbf{E07 — Seguridad (confidencialidad).} La plataforma deberá \textbf{rechazar 150 de 150 solicitudes de prueba} que intenten consultar información médica de otros pacientes sin autorización, sin revelar datos sensibles.
+
+\noindent{\footnotesize\textit{Métrica y prueba prevista:} intentos no autorizados rechazados / 150 $\times 100$; meta: 100\% en los casos ensayados. Pruebas con cuentas simuladas.}\par
+
+\Needspace{5\baselineskip}
+\noindent\textbf{E10 — Capacidad de interacción (inclusividad).} Al menos \textbf{18 de 20 personas de 60 años o más} deberán reservar una cita de prueba en \textbf{5 minutos o menos}, sin ayuda, desde un teléfono Android 10 de gama media o baja y con conexión estable.
+
+\noindent{\footnotesize\textit{Métrica y prueba prevista:} participantes que completan la reserva en 300 segundos / 20 $\times 100$; meta: 90\%. Observación y cronómetro, con la misma tarea para todos.}\par
+
+\Needspace{5\baselineskip}
+\noindent\textbf{E14 — Fiabilidad (disponibilidad).} La consulta y reserva de citas deberán responder correctamente en \textbf{al menos el 99,5\%} de las comprobaciones automáticas, realizadas \textbf{una vez por minuto durante 30 días} desde una red externa.
+
+\noindent{\footnotesize\textit{Métrica y prueba prevista:} respuestas correctas / comprobaciones previstas $\times 100$; meta: $\geq 99{,}5$\%. Supervisión del servicio y de la respuesta esperada.}\par
+
+\Needspace{5\baselineskip}
+\noindent\textbf{E18 — Compatibilidad (interoperabilidad).} En un entorno de prueba basado en la interfaz documentada del proveedor de facturación, la plataforma deberá \textbf{registrar correctamente 50 de 50 cobros simulados}, conservando identificador, importe y estado de cada operación.
+
+\noindent{\footnotesize\textit{Métrica y prueba prevista:} operaciones correctas / 50 $\times 100$; meta: 100\% de los casos definidos. Prueba de integración; la emisión de facturas seguirá en el sistema existente.}\par
+
+\section{Problemas encontrados en la redacción}
+\textbf{E03} es ambiguo porque no fija un tiempo; \textbf{E07} no identifica qué control de seguridad se evaluará; \textbf{E10} no define una tarea para adultos mayores; \textbf{E14} utiliza «siempre» sin porcentaje ni período; y \textbf{E18} no precisa qué significa integrarse «sin problemas». Las cinco propuestas anteriores establecen cómo medir esos resultados.
+
+\section{Comparación de criterios con un compañero}
+La comparación se realizará con otro estudiante. Por ahora no se consignan diferencias ni acuerdos que no se hayan discutido. Los casos E05, E09 y E12 pueden servir para revisar si una condición corresponde al producto, al proceso o a una regla del dominio.
+
+\noindent\textbf{Compañero(a):} \rule{4.5cm}{0.4pt}\hfill\textbf{Fecha:} \rule{3cm}{0.4pt}
+\smallskip
+\begin{tabularx}{\linewidth}{@{}p{.7cm}X X X@{}}\toprule
+\textbf{ID}&\textbf{Diferencia de clasificación}&\textbf{Criterios discutidos}&\textbf{Acuerdo y motivo}\\\midrule
+\rule{0pt}{1.8em} & & & \\\midrule
+\rule{0pt}{1.8em} & & & \\\midrule
+\rule{0pt}{1.8em} & & & \\\bottomrule
+\end{tabularx}
+
+\section{Observaciones}
+E09 y E12 muestran que una regla del negocio o un control de seguridad puede expresarse como función. E11, E16 y E20, en cambio, indican cómo se organiza el trabajo. Las metas de calidad solo se verificarían con un prototipo; el policlínico del caso es ficticio.
+
+\noindent{\footnotesize\textbf{Uso de IA.} Se utilizó ChatGPT (GPT-6) para apoyar el borrador de clasificaciones, ejemplos de métricas y edición LaTeX. Las propuestas se contrastaron con la guía y las fichas bibliográficas. No se realizaron pruebas ni la discusión con otro estudiante.}\par
+
+\section*{Referencias}
+\printbibliography[heading=none]
+\end{document}
