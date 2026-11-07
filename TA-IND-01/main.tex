@@ -1,5 +1,3 @@
-% TA-IND-01 — Análisis del sistema real: App Banco Guayaquil.
-% Documento académico con requisitos propuestos, NO resultados de ensayos ejecutados.
 \documentclass[conference,a4paper]{IEEEtran}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -164,29 +162,33 @@ RC-15 & La app trabajará perfectamente con otras plataformas. & Se acotaron int
 
 \clearpage
 \section{Evidencia visual del sistema real}\label{sec:figuras}
-La Figura~\ref{fig:evidencias} reúne tres fotografías propias de la versión Android de la aplicación. Antes de incorporarlas se ocultaron datos de personas y operaciones; únicamente se utilizan para acreditar opciones visibles, no resultados de pruebas de seguridad o rendimiento \cite{ayudaBG,banco2026}.
-\par\medskip\noindent
+Las Figuras~\ref{fig:inicio}, \ref{fig:pagos} y \ref{fig:movimientos} corresponden a fotografías propias de la aplicación en Android. La primera muestra el resumen de la cuenta; la segunda, el acceso a pagos de servicios y recargas; y la tercera, la consulta del historial. Se ocultaron datos bancarios y personales. Estas imágenes documentan pantallas visibles, no pruebas de desempeño o seguridad \cite{ayudaBG,saldosBG}.
+\par\smallskip\noindent
 \begin{center}
 \begin{minipage}[t]{0.31\columnwidth}\centering
 \includegraphics[height=3.3cm,keepaspectratio]{figuras/figura_01_inicio.jpg}\par
-{\scriptsize (a) Inicio y resumen}\end{minipage}\hfill
+\refstepcounter{figure}\label{fig:inicio}
+{\scriptsize\textbf{Figura~\thefigure.} Pantalla de inicio y resumen de cuenta.}
+\end{minipage}\hfill
 \begin{minipage}[t]{0.31\columnwidth}\centering
 \includegraphics[height=3.3cm,keepaspectratio]{figuras/figura_02_pagos.jpg}\par
-{\scriptsize (b) Panel de pagos}\end{minipage}\hfill
+\refstepcounter{figure}\label{fig:pagos}
+{\scriptsize\textbf{Figura~\thefigure.} Panel de pagos y servicios.}
+\end{minipage}\hfill
 \begin{minipage}[t]{0.31\columnwidth}\centering
 \includegraphics[height=3.3cm,keepaspectratio]{figuras/figura_03_movimientos.jpg}\par
-{\scriptsize (c) Movimientos}\end{minipage}
-\par\smallskip\refstepcounter{figure}\label{fig:evidencias}
-{\footnotesize\textbf{Figura~\thefigure.} Fotografías propias: inicio, pagos e historial de movimientos. Datos sensibles ocultos.}
+\refstepcounter{figure}\label{fig:movimientos}
+{\scriptsize\textbf{Figura~\thefigure.} Consulta del historial de movimientos.}
+\end{minipage}
 \end{center}
 \medskip
 
 \section{Reflexión crítica sobre la formulación}\label{sec:reflex}
-La mayor dificultad de esta propuesta aparece al pasar de una función visible a una condición de calidad: observar que una aplicación permite transferir dinero no demuestra cuánto tarda cada operación, qué porcentaje de disponibilidad alcanza ni cómo valida sus solicitudes internas. Es necesario distinguir tres clases de información: hechos observables en la interfaz, explicaciones públicas del banco y metas definidas exclusivamente para un ejercicio académico. Confundirlas lleva a inventar pruebas o a presentar hipótesis como resultados. La norma ayuda precisamente a separar estos niveles.
+Lo más difícil al redactar estos requisitos fue pasar de lo que se ve en una pantalla a una condición de calidad que realmente se pueda comprobar. En las fotos se aprecia dónde consultar movimientos y cómo acceder a los pagos, pero no cuánto tarda el servicio cuando lo usan muchas personas ni qué mecanismos utiliza para proteger cada operación. Por eso separé lo observado en la aplicación, lo descrito en la ayuda oficial del banco y las metas que propongo únicamente para este ejercicio. Una cosa es describir una función y otra afirmar que ya superó una prueba: aquí no se hicieron esas mediciones.
 
-Una segunda dificultad surge cuando una frase intenta reunir demasiados comportamientos. Por ejemplo, ``transferir, avisar y emitir comprobante rápidamente'' parece una sola necesidad, pero contiene varias obligaciones y una palabra ambigua. Dividirla en requisitos independientes permite comprobar cada resultado y localizar el origen de un fallo. También se aprendió que un porcentaje, por sí solo, no basta: debe indicarse la población de ensayo, la duración, el método y la condición de aceptación. El mismo 95\% puede significar cosas distintas si se mide sobre diez consultas o sobre miles de operaciones concurrentes.
+También encontré que una frase puede sonar clara y aun así mezclar tareas. Decir ``transferir, avisar y emitir comprobante rápidamente'' no sirve como un único requisito: hay varias acciones y la palabra ``rápidamente'' no fija un límite. Al separarlas, resulta más fácil decidir qué verificar. Lo mismo ocurre con los porcentajes: escribir 95\% no basta si no se explica qué se mide, cuántas solicitudes hay y durante cuánto tiempo. Sin esas condiciones, dos personas podrían evaluar el mismo requisito de manera diferente.
 
-La revisión también muestra límites que no deben ocultarse. El contrato de los servicios internos del Banco Guayaquil no es público para esta actividad, de modo que los requisitos de interfaz se plantean como hipótesis. Las capturas incorporadas respaldan opciones visibles de la app, pero no prueban la seguridad o el rendimiento de los servicios bancarios. Una etapa posterior tendría que validar estas propuestas con usuarios y responsables autorizados. El aprendizaje principal es formular compromisos verificables sin confundir la experiencia del cliente con supuestos sobre la implementación.
+La revisión también muestra límites que no deben ocultarse. El contrato de los servicios internos del Banco Guayaquil no es público para esta actividad, de modo que los requisitos de interfaz se plantean como hipótesis. Las tres figuras sirven para reconocer opciones de la interfaz, pero no prueban la seguridad o el rendimiento del servicio bancario. Una etapa posterior tendría que validar estas propuestas con usuarios y responsables autorizados. El aprendizaje principal es formular compromisos verificables sin confundir la experiencia del cliente con supuestos sobre la implementación.
 
 \section*{Referencias}
 \printbibliography[heading=none]

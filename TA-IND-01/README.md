@@ -4,7 +4,7 @@
 **Estudiante:** Cedeño Avila Winston Damian  
 **Nivel y paralelo:** 4.º "B" — UTEQ  
 **Sistema elegido:** App Banco Guayaquil, aplicación de banca móvil.  
-**Estado:** Informe académico con evidencias fotográficas propias incorporadas. **Pendiente de comprobar:** registro de la elección del sistema en el foro del SGA y revisión final personal.
+**Estado:** Versión revisada del informe, con tres figuras numeradas por separado. **Pendiente de confirmar en el SGA:** registro de la elección del sistema en el foro.
 
 ## Contenido
 
@@ -15,7 +15,7 @@ El documento analiza los fundamentos de la norma ISO/IEC/IEEE 29148:2018 y aplic
 ## Archivos
 
 - `main.tex`: fuente editable y archivo principal del informe.
-- `main.pdf`: compilación reproducible del informe (7 páginas, incluido el conjunto de evidencias).
+- `main.pdf`: PDF compilado desde `main.tex`, con tres figuras independientes y siete páginas.
 - `referencias.bib`: fuentes verificables en formato IEEE mediante `biblatex`/`biber`.
 - `figuras/figura_01_inicio.jpg`: fotografía de la pantalla inicial, con datos privados ocultos.
 - `figuras/figura_02_pagos.jpg`: fotografía del panel de pagos de servicios.
@@ -49,7 +49,7 @@ La app puede mostrar recorridos distintos según versión y sistema operativo; l
 
 ## Integridad académica
 
-Se utilizó ChatGPT (OpenAI, GPT-6) para apoyar la redacción, clasificación y edición LaTeX. Las fuentes normativas se contrastaron con la documentación citada y las funcionalidades visibles con ayuda oficial del banco. Los requisitos se presentan como **propuestas**, no como resultados obtenidos mediante pruebas. El estudiante debe revisar la redacción y la reflexión y confirmar que sus evidencias y decisiones representan el uso real de la aplicación.
+Se utilizó ChatGPT (OpenAI, GPT-6) para apoyar la redacción, clasificación y edición LaTeX. Las fuentes normativas se contrastaron con la documentación citada y las funcionalidades visibles con ayuda oficial del banco. Los requisitos se presentan como **propuestas**, no como resultados obtenidos mediante pruebas. La documentación distingue observaciones de interfaz, fuentes del banco y requisitos propuestos para un ejercicio académico; no se realizaron pruebas de infraestructura.
 
 ## Entrega al SGA
 
@@ -57,4 +57,4 @@ La guía indica subir al SGA **solo una carátula PDF de una página** con nombr
 
 ## Evidencias fotográficas
 
-Las tres fotografías se integraron como evidencias de interfaz: inicio, panel de pagos e historial de movimientos. Los nombres y los importes sensibles se ocultaron antes de su incorporación. No constituyen pruebas de carga, disponibilidad ni seguridad del servicio.
+Las fotografías aparecen como **Figura 1** (inicio), **Figura 2** (panel de pagos) y **Figura 3** (historial de movimientos), cada una con su pie de figura independiente. Los nombres y los importes sensibles se ocultaron antes de su incorporación. No constituyen pruebas de carga, disponibilidad ni seguridad del servicio.
