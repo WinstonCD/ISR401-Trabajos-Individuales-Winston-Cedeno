@@ -1,50 +1,57 @@
-# TA-IND-01 — Actividad Autónoma 1: Caso GAD cantonal
+# TA-IND-01 / TA-TAR-01 — Banca Móvil Banco Guayaquil
 
-**Asignatura:** Ingeniería de Requisitos (ISR-401)  
+**Asignatura:** Ingeniería de Requerimientos (ISR-401)  
 **Estudiante:** Cedeño Avila Winston Damian  
-**Carrera:** Ingeniería de Software — cuarto nivel, paralelo B  
-**Universidad:** Universidad Técnica Estatal de Quevedo (UTEQ)
-
-## Tema y alcance
-
-Especificación inicial de requisitos para el cobro de impuestos prediales en línea de un GAD cantonal hipotético. Incluye una pasarela local de pagos y una integración con el SRI condicionada a la existencia de un servicio autorizado.
+**Nivel y paralelo:** 4.º "B" — UTEQ  
+**Sistema elegido:** App Banco Guayaquil, aplicación de banca móvil.  
+**Estado:** Borrador académico. **Faltan tres capturas auténticas del estudiante y la confirmación del registro del sistema en el foro del SGA.**
 
 ## Contenido
 
-- Seis partes interesadas y sus necesidades preliminares.
-- Cinco requisitos funcionales (RF-01 a RF-05) con comprobaciones propuestas.
-- Cinco requisitos no funcionales (RNF-01 a RNF-05) clasificados según ISO/IEC 25010:2023, con métricas y métodos de verificación.
-- Tres restricciones justificadas (R-01 a R-03).
-- Dos dependencias entre requisitos (D-01 y D-02).
-- Matriz de trazabilidad entre necesidades, requisitos y comprobaciones.
+El documento analiza los fundamentos de la norma ISO/IEC/IEEE 29148:2018 y aplica la clasificación de calidad ISO/IEC 25010:2023 al caso de la App Banco Guayaquil. Incluye resumen analítico de las cláusulas 5.2.4–5.2.7, glosario de diez términos de la cláusula 3, quince requisitos distribuidos en cinco tipos, una tabla de clasificación y aceptación, autoevaluación con versiones anterior y corregida y reflexión crítica.
 
-Los valores de rendimiento, disponibilidad y demás metas son **supuestos de prueba del caso académico**, no mediciones de un GAD. Las condiciones de integración con proveedores externos están pendientes de confirmación en un proyecto real.
+**Alcance:** los flujos observables de saldo, movimientos, beneficiarios, transferencias y comprobantes se apoyan en documentación pública del banco. La arquitectura interna, respuestas de las API y los umbrales de calidad son propuestas académicas que requieren validación; no son mediciones ni afirmaciones oficiales del banco.
 
 ## Archivos
 
-| Archivo | Descripción |
-|---|---|
-| `actividad_autonoma_1.tex` | Fuente LaTeX del informe. |
-| `referencias.bib` | Bibliografía BibLaTeX con estilo IEEE. |
-| `actividad_autonoma_1.pdf` | PDF compilado desde la fuente. |
-| `README.md` | Información e instrucciones de reproducción. |
+- `main.tex`: fuente editable y archivo principal del informe.
+- `main.pdf`: compilación reproducible del informe (6 páginas en el borrador actual).
+- `referencias.bib`: fuentes verificables en formato IEEE mediante `biblatex`/`biber`.
+- `figuras/captura_inicio.png`: evidencia propia de inicio o consulta, sin datos privados (**pendiente**).
+- `figuras/captura_transferencia.png`: evidencia propia del acceso a Transferir/Pagos (**pendiente**).
+- `figuras/captura_comprobantes.png`: evidencia propia de la ruta de comprobantes (**pendiente**).
+- `figuras/README.md`: indicaciones para preparar las evidencias.
 
-## Reproducción del PDF
+> El código contiene controles `\IfFileExists`: cuando una figura no existe, aparece una caja identificada como **CAPTURA PROPIA PENDIENTE**. Eso permite revisar el borrador, pero **no equivale a entregar las tres capturas exigidas**. Después de añadirlas hay que recompilar `main.pdf`.
 
-Se requiere una instalación de TeX Live o MiKTeX con `pdflatex`, `biber`, la clase `IEEEtran` y los paquetes indicados en el preámbulo del `.tex` (entre ellos `biblatex-ieee`). Desde `TA-IND-01`, ejecutar:
+## Compilación desde el repositorio
+
+Instalar **TeX Live** o **MiKTeX**, con `pdfLaTeX`, `biber`, la clase `IEEEtran` y los paquetes `babel` (español), `lmodern`, `microtype`, `csquotes`, `graphicx`, `booktabs`, `tabularx`, `array`, `xcolor`, `biblatex` con estilo `ieee`, `hyperref` y `needspace`.
+
+En una consola, situarse en `TA-IND-01` y ejecutar exactamente:
 
 ```bash
-pdflatex -interaction=nonstopmode -halt-on-error actividad_autonoma_1.tex
-biber actividad_autonoma_1
-pdflatex -interaction=nonstopmode -halt-on-error actividad_autonoma_1.tex
-pdflatex -interaction=nonstopmode -halt-on-error actividad_autonoma_1.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+biber main
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-## Referencias
+El PDF de la versión preparada compila sin referencias faltantes. Los tres PNG deben permanecer con esos nombres y dentro de `figuras/` para incorporarse de forma automática. Se debe revisar que el documento compilado definitivo permanezca entre 4 y 7 páginas de contenido.
 
-- [ISO/IEC/IEEE 29148:2018 — Requirements engineering](https://www.iso.org/standard/72089.html)
-- [ISO/IEC 25010:2023 — Product quality model](https://www.iso.org/standard/78176.html)
+## Material y limitaciones
 
-## Declaración de uso de IA
+- Normas: ISO/IEC/IEEE 29148:2018 e ISO/IEC 25010:2023.
+- Libro: Klaus Pohl, *Requirements Engineering*, 2.ª ed., Springer, 2025.
+- Manual: *SWEBOK Guide*, v4.0, IEEE Computer Society, 2024.
+- Ayuda y comunicaciones oficiales de Banco Guayaquil (consultar `referencias.bib`).
 
-Se utilizó ChatGPT (OpenAI, GPT-6) como apoyo para la redacción, la propuesta de métricas y la edición en LaTeX. El contenido fue revisado antes de su presentación. No se realizaron entrevistas ni pruebas de un sistema municipal.
+La app puede mostrar recorridos distintos según versión y sistema operativo; los apartados de la interfaz deben comprobarse con el dispositivo realmente observado. No se usan datos bancarios de terceros ni se publican contraseñas, códigos SMS, saldos, números de cuenta o transacciones identificables.
+
+## Integridad académica
+
+Se utilizó ChatGPT (OpenAI, GPT-6) para apoyar la redacción, clasificación y edición LaTeX. Las fuentes normativas se contrastaron con la documentación citada y las funcionalidades visibles con ayuda oficial del banco. Los requisitos se presentan como **propuestas**, no como resultados obtenidos mediante pruebas. La redacción, reflexión y evidencia visual deben ser revisadas y completadas por el estudiante antes de la entrega.
+
+## Entrega al SGA
+
+La guía indica subir al SGA **solo una carátula PDF de una página** con nombre, tarea, plazo y URL pública completa en una línea. El informe, fuentes y evidencias van en este repositorio. **Fecha de cierre indicada por la guía: 7 de noviembre de 2026, 23:59** (verificar cualquier prórroga con el docente).
