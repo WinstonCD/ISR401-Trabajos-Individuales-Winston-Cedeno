@@ -22,7 +22,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Se estudia la formulación de requisitos verificables con base en ISO/IEC/IEEE 29148:2018 y se aplica a la aplicación móvil de Banco Guayaquil. Se proponen quince requisitos de cinco tipos, se clasifican cinco requisitos de calidad conforme a ISO/IEC 25010:2023 y se realiza una revisión de ambigüedad y criterios de aceptación. Se distinguen las funciones documentadas por el banco de los objetivos técnicos planteados para este ejercicio. Las capturas propias del estudiante están pendientes de incorporar.
+Se estudia la formulación de requisitos verificables con base en ISO/IEC/IEEE 29148:2018 y se aplica a la aplicación móvil de Banco Guayaquil. Se proponen quince requisitos de cinco tipos, se clasifican cinco requisitos de calidad conforme a ISO/IEC 25010:2023 y se realiza una revisión de ambigüedad y criterios de aceptación. Se distinguen las funciones documentadas por el banco de los objetivos técnicos planteados para este ejercicio. Se incluyen tres fotografías propias de la aplicación con información personal y financiera oculta.
 \end{abstract}
 \section{Sistema elegido y alcance}
 La App Banco Guayaquil permite a clientes con credenciales válidas consultar saldos y movimientos, registrar destinatarios, efectuar transferencias y revisar comprobantes. En 2026 el banco comunicó una reorganización de la experiencia de pagos; sus guías diferencian la navegación de Android e iPhone \cite{banco2026,ayudaBG,saldosBG,comproBG}. Este trabajo se centra en los flujos comunes documentados para la \emph{app móvil}, con ejemplos de navegación Android. No se analiza la banca web. El sistema fue escogido para esta actividad; su prioridad de registro en el foro del SGA debe ser confirmada.
@@ -162,32 +162,33 @@ RC-15 & La app trabajará perfectamente con otras plataformas. & Se acotaron int
 \end{table*}
 \noindent\textit{Síntesis de las nueve cualidades:} el análisis de la redacción comprueba adecuación, ausencia de ambigüedad, completitud, singularidad, verificabilidad y conformidad formal. La necesidad real, factibilidad y correspondencia con las expectativas del banco no se pueden dar por validadas mediante documentos públicos; requieren participación del titular del producto y de sus responsables técnicos. Esta limitación es común a los quince enunciados corregidos.
 
+\clearpage
 \section{Evidencia visual del sistema real}\label{sec:figuras}
-Las siguientes áreas están reservadas para capturas \textbf{propias} del dispositivo usado en la observación. No se incorporaron fotografías de otras personas ni capturas promocionales como si fueran originales. Las imágenes deberán ocultar nombres, saldos, cuentas, códigos de seguridad y otros datos sensibles. La versión Android puede presentar rutas distintas de iPhone, según la documentación oficial \cite{ayudaBG,banco2026}.
-\begin{figure}[!htb]
-\centering
-\IfFileExists{figuras/captura_inicio.png}{\includegraphics[height=2.25cm,keepaspectratio]{figuras/captura_inicio.png}}{\fbox{\parbox[c][2.0cm][c]{0.90\columnwidth}{\centering\scriptsize CAPTURA PROPIA PENDIENTE\\ captura\_inicio.png}}}
-\caption{Inicio o Mis productos (RF-01/RF-02). Evidencia 1.}
-\end{figure}
-\begin{figure}[!htb]
-\centering
-\IfFileExists{figuras/captura_transferencia.png}{\includegraphics[height=2.25cm,keepaspectratio]{figuras/captura_transferencia.png}}{\fbox{\parbox[c][2.0cm][c]{0.90\columnwidth}{\centering\scriptsize CAPTURA PROPIA PENDIENTE\\ captura\_transferencia.png}}}
-\caption{Acceso a Transferir o Pagos (RF-03/PR-07). Evidencia 2.}
-\end{figure}
-\begin{figure}[!htb]
-\centering
-\IfFileExists{figuras/captura_comprobantes.png}{\includegraphics[height=2.25cm,keepaspectratio]{figuras/captura_comprobantes.png}}{\fbox{\parbox[c][2.0cm][c]{0.90\columnwidth}{\centering\scriptsize CAPTURA PROPIA PENDIENTE\\ captura\_comprobantes.png}}}
-\caption{Ruta a comprobantes (RF-04). Evidencia 3.}
-\end{figure}
+La Figura~\ref{fig:evidencias} reúne tres fotografías propias de la versión Android de la aplicación. Antes de incorporarlas se ocultaron datos de personas y operaciones; únicamente se utilizan para acreditar opciones visibles, no resultados de pruebas de seguridad o rendimiento \cite{ayudaBG,banco2026}.
+\par\medskip\noindent
+\begin{center}
+\begin{minipage}[t]{0.31\columnwidth}\centering
+\includegraphics[height=3.3cm,keepaspectratio]{figuras/figura_01_inicio.jpg}\par
+{\scriptsize (a) Inicio y resumen}\end{minipage}\hfill
+\begin{minipage}[t]{0.31\columnwidth}\centering
+\includegraphics[height=3.3cm,keepaspectratio]{figuras/figura_02_pagos.jpg}\par
+{\scriptsize (b) Panel de pagos}\end{minipage}\hfill
+\begin{minipage}[t]{0.31\columnwidth}\centering
+\includegraphics[height=3.3cm,keepaspectratio]{figuras/figura_03_movimientos.jpg}\par
+{\scriptsize (c) Movimientos}\end{minipage}
+\par\smallskip\refstepcounter{figure}\label{fig:evidencias}
+{\footnotesize\textbf{Figura~\thefigure.} Fotografías propias: inicio, pagos e historial de movimientos. Datos sensibles ocultos.}
+\end{center}
+\medskip
 
 \section{Reflexión crítica sobre la formulación}\label{sec:reflex}
 La mayor dificultad de esta propuesta aparece al pasar de una función visible a una condición de calidad: observar que una aplicación permite transferir dinero no demuestra cuánto tarda cada operación, qué porcentaje de disponibilidad alcanza ni cómo valida sus solicitudes internas. Es necesario distinguir tres clases de información: hechos observables en la interfaz, explicaciones públicas del banco y metas definidas exclusivamente para un ejercicio académico. Confundirlas lleva a inventar pruebas o a presentar hipótesis como resultados. La norma ayuda precisamente a separar estos niveles.
 
 Una segunda dificultad surge cuando una frase intenta reunir demasiados comportamientos. Por ejemplo, ``transferir, avisar y emitir comprobante rápidamente'' parece una sola necesidad, pero contiene varias obligaciones y una palabra ambigua. Dividirla en requisitos independientes permite comprobar cada resultado y localizar el origen de un fallo. También se aprendió que un porcentaje, por sí solo, no basta: debe indicarse la población de ensayo, la duración, el método y la condición de aceptación. El mismo 95\% puede significar cosas distintas si se mide sobre diez consultas o sobre miles de operaciones concurrentes.
 
-La revisión también muestra límites que no deben ocultarse. El contrato de los servicios internos del Banco Guayaquil no es público para esta actividad, de modo que los requisitos de interfaz se plantean como hipótesis. Las capturas que se incorporen servirán para respaldar opciones visibles de la app, pero no probarán la seguridad o el rendimiento de los servicios bancarios. Una etapa posterior tendría que validar estas propuestas con usuarios y responsables autorizados. El aprendizaje principal es formular compromisos verificables sin confundir la experiencia del cliente con supuestos sobre la implementación.
+La revisión también muestra límites que no deben ocultarse. El contrato de los servicios internos del Banco Guayaquil no es público para esta actividad, de modo que los requisitos de interfaz se plantean como hipótesis. Las capturas incorporadas respaldan opciones visibles de la app, pero no prueban la seguridad o el rendimiento de los servicios bancarios. Una etapa posterior tendría que validar estas propuestas con usuarios y responsables autorizados. El aprendizaje principal es formular compromisos verificables sin confundir la experiencia del cliente con supuestos sobre la implementación.
 
 \section*{Referencias}
 \printbibliography[heading=none]
-\noindent\footnotesize\textbf{Declaración de IA.} Se utilizó ChatGPT (OpenAI, GPT-6, noviembre de 2026) como apoyo para organizar la estructura en LaTeX, generar propuestas de redacción y revisar expresiones ambiguas. Se contrastaron los títulos y cláusulas citadas con fuentes disponibles de ISO/IEEE y las funciones de la aplicación con publicaciones oficiales de Banco Guayaquil. Los requisitos y umbrales constituyen propuestas académicas: no se realizaron entrevistas, pruebas bancarias ni observación de capturas que aún no hayan sido aportadas por el estudiante. La revisión crítica y las evidencias propias deberán completarse antes de presentar una versión definitiva.
+\noindent\footnotesize\textbf{Declaración de IA.} Se utilizó ChatGPT (OpenAI, GPT-6, noviembre de 2026) como apoyo para organizar la estructura en LaTeX, generar propuestas de redacción y revisar expresiones ambiguas. Se contrastaron los títulos y cláusulas citadas con fuentes disponibles de ISO/IEEE y las funciones de la aplicación con publicaciones oficiales de Banco Guayaquil. Los requisitos y umbrales constituyen propuestas académicas: no se realizaron entrevistas ni pruebas sobre la infraestructura del banco. Las fotografías propias se incorporaron como evidencias visuales con datos sensibles ocultos; su contenido debe interpretarse únicamente como observación de interfaz.
 \end{document}

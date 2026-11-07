@@ -4,7 +4,7 @@
 **Estudiante:** Cedeño Avila Winston Damian  
 **Nivel y paralelo:** 4.º "B" — UTEQ  
 **Sistema elegido:** App Banco Guayaquil, aplicación de banca móvil.  
-**Estado:** Borrador académico. **Faltan tres capturas auténticas del estudiante y la confirmación del registro del sistema en el foro del SGA.**
+**Estado:** Informe académico con evidencias fotográficas propias incorporadas. **Pendiente de comprobar:** registro de la elección del sistema en el foro del SGA y revisión final personal.
 
 ## Contenido
 
@@ -15,14 +15,13 @@ El documento analiza los fundamentos de la norma ISO/IEC/IEEE 29148:2018 y aplic
 ## Archivos
 
 - `main.tex`: fuente editable y archivo principal del informe.
-- `main.pdf`: compilación reproducible del informe (6 páginas en el borrador actual).
+- `main.pdf`: compilación reproducible del informe (7 páginas, incluido el conjunto de evidencias).
 - `referencias.bib`: fuentes verificables en formato IEEE mediante `biblatex`/`biber`.
-- `figuras/captura_inicio.png`: evidencia propia de inicio o consulta, sin datos privados (**pendiente**).
-- `figuras/captura_transferencia.png`: evidencia propia del acceso a Transferir/Pagos (**pendiente**).
-- `figuras/captura_comprobantes.png`: evidencia propia de la ruta de comprobantes (**pendiente**).
-- `figuras/README.md`: indicaciones para preparar las evidencias.
+- `figuras/figura_01_inicio.jpg`: fotografía de la pantalla inicial, con datos privados ocultos.
+- `figuras/figura_02_pagos.jpg`: fotografía del panel de pagos de servicios.
+- `figuras/figura_03_movimientos.jpg`: fotografía del historial de movimientos, con datos financieros ocultos.
 
-> El código contiene controles `\IfFileExists`: cuando una figura no existe, aparece una caja identificada como **CAPTURA PROPIA PENDIENTE**. Eso permite revisar el borrador, pero **no equivale a entregar las tres capturas exigidas**. Después de añadirlas hay que recompilar `main.pdf`.
+Las figuras están insertadas en `main.tex` por sus rutas relativas. El PDF se debe compilar con esas tres imágenes presentes en la carpeta `figuras/`.
 
 ## Compilación desde el repositorio
 
@@ -37,7 +36,7 @@ pdflatex -interaction=nonstopmode -halt-on-error main.tex
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-El PDF de la versión preparada compila sin referencias faltantes. Los tres PNG deben permanecer con esos nombres y dentro de `figuras/` para incorporarse de forma automática. Se debe revisar que el documento compilado definitivo permanezca entre 4 y 7 páginas de contenido.
+El PDF de la versión preparada compila sin referencias faltantes. Las tres imágenes JPG deben conservar sus nombres y permanecer dentro de `figuras/` al compilar. La presente versión produce 7 páginas (rango de la guía: 4 a 7 páginas).
 
 ## Material y limitaciones
 
@@ -50,8 +49,12 @@ La app puede mostrar recorridos distintos según versión y sistema operativo; l
 
 ## Integridad académica
 
-Se utilizó ChatGPT (OpenAI, GPT-6) para apoyar la redacción, clasificación y edición LaTeX. Las fuentes normativas se contrastaron con la documentación citada y las funcionalidades visibles con ayuda oficial del banco. Los requisitos se presentan como **propuestas**, no como resultados obtenidos mediante pruebas. La redacción, reflexión y evidencia visual deben ser revisadas y completadas por el estudiante antes de la entrega.
+Se utilizó ChatGPT (OpenAI, GPT-6) para apoyar la redacción, clasificación y edición LaTeX. Las fuentes normativas se contrastaron con la documentación citada y las funcionalidades visibles con ayuda oficial del banco. Los requisitos se presentan como **propuestas**, no como resultados obtenidos mediante pruebas. El estudiante debe revisar la redacción y la reflexión y confirmar que sus evidencias y decisiones representan el uso real de la aplicación.
 
 ## Entrega al SGA
 
 La guía indica subir al SGA **solo una carátula PDF de una página** con nombre, tarea, plazo y URL pública completa en una línea. El informe, fuentes y evidencias van en este repositorio. **Fecha de cierre indicada por la guía: 7 de noviembre de 2026, 23:59** (verificar cualquier prórroga con el docente).
+
+## Evidencias fotográficas
+
+Las tres fotografías se integraron como evidencias de interfaz: inicio, panel de pagos e historial de movimientos. Los nombres y los importes sensibles se ocultaron antes de su incorporación. No constituyen pruebas de carga, disponibilidad ni seguridad del servicio.
