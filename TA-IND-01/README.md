@@ -4,7 +4,13 @@
 **Estudiante:** Cedeño Avila Winston Damian  
 **Nivel y paralelo:** 4.º "B" — UTEQ  
 **Sistema elegido:** App Banco Guayaquil, aplicación de banca móvil.  
-**Estado:** Versión revisada del informe, con tres figuras numeradas por separado. **Pendiente de confirmar en el SGA:** registro de la elección del sistema en el foro.
+**Estado:** Informe revisado, con tres evidencias fotográficas numeradas por separado y PDF compilado desde LaTeX.
+
+## Historial de corrección del caso
+
+Los primeros avances de esta actividad se hicieron tomando como referencia un caso académico de cobro predial para un GAD cantonal. Después, al revisar la consigna específica de la tarea sumativa del SGA, se identificó que debía analizarse un sistema real utilizado por el estudiante.
+
+Por esta razón se eligió **Banca Móvil Banco Guayaquil** y se reemplazó el informe anterior. La actualización de archivos, la incorporación de fotografías propias y la revisión final se concentraron el **7 de noviembre de 2026** para corregir la interpretación inicial. Esto no significa que no existiera trabajo previo: los commits anteriores documentan los avances del caso GAD y el cambio de enfoque. Se conserva el historial sin modificar fechas.
 
 ## Contenido
 
