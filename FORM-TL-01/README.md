@@ -1,45 +1,40 @@
-# FORM-TL-01 - Identificación y clasificación de tipos de requisitos
+# FORM-TL-01 — Identificación y clasificación de tipos de requisitos
 
-**Universidad:** Universidad Técnica Estatal de Quevedo  
-**Carrera:** Ingeniería de Software  
 **Asignatura:** Ingeniería de Requisitos (ISR-401)  
 **Estudiante:** Cedeño Avila Winston Damian  
-**Nivel:** Cuarto "B"  
-**Actividad:** Formativa - Taller de tipos de requisitos
+**Nivel y paralelo:** Cuarto «B» — Ingeniería de Software  
+**Universidad:** Universidad Técnica Estatal de Quevedo
 
-## Objetivo
+## Tema
 
-Identificar y clasificar diferentes tipos de requisitos de software mediante el análisis de 20 enunciados de una plataforma de gestión de citas médicas, aplicando los fundamentos de Ingeniería de Requisitos.
-
-## Caso de estudio
-
-Plataforma de gestión de citas médicas del Policlínico Ribera del Quevedo.
+Clasificación de requisitos para la **Plataforma de gestión de citas médicas** del Policlínico Ribera del Quevedo (caso académico ficticio).
 
 ## Contenido
 
-- Clasificación de 20 enunciados.
-- Justificación de los tipos de requisitos.
-- Identificación de características de calidad ISO/IEC 25010:2023.
-- Mejora de cinco requisitos de calidad con métricas verificables.
-- Registro de diferencias de criterio con un compañero (pendiente de completar).
+El informe contiene 20 enunciados clasificados y justificados en las dimensiones solicitadas: tipo principal de requisito, producto/proceso y sistema/software. Se identifican cinco requisitos de calidad vagos y se proponen redacciones con métricas y umbrales. Incluye una comparación documental con el trabajo de Mendoza Palma Allan Jeremy, con coincidencias, diferencias y justificaciones.
 
 ## Archivos
 
-- `main.tex`: documento fuente en LaTeX.
-- `main.pdf`: informe compilado.
-- `referencias.bib`: bibliografía en formato IEEE.
+- `main.tex`: informe fuente en LaTeX (clase `IEEEtran`, una columna).
+- `referencias.bib`: referencias para `biblatex` con estilo IEEE.
+- `main.pdf`: PDF compilado desde el código fuente.
+- `README.md`: descripción e instrucciones de compilación.
 
 ## Compilación
 
-El documento utiliza IEEEtran, pdfLaTeX y Biber.
+Se requiere TeX Live o MiKTeX con `pdflatex`, `biber`, `IEEEtran`, `babel`, `lmodern`, `microtype`, `csquotes`, `longtable`, `tabularx`, `booktabs`, `needspace`, `hyperref` y `biblatex-ieee`.
+
+Desde esta carpeta, ejecutar:
 
 ```bash
-pdflatex main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
 biber main
-pdflatex main.tex
-pdflatex main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-## Uso de inteligencia artificial
+## Alcance y declaración
 
-Se utilizó ChatGPT como apoyo para organizar el borrador, revisar las clasificaciones y preparar el documento LaTeX. Las propuestas requieren revisión y comprensión del estudiante.
+Las cifras de los requisitos de calidad son **objetivos de prueba propuestos** y no resultados medidos. La comparación presentada contrasta los dos informes y explica los criterios técnicos adoptados; no atribuye al compañero acuerdos que no constan en los documentos. Se utilizó ChatGPT (GPT-6) como apoyo para organizar el borrador, clasificaciones, métricas y LaTeX; las referencias se contrastaron con el material académico y las fichas bibliográficas.
+
+Según la indicación comunicada para cuarto «B», el trabajo se publica en GitHub y se presenta una carátula informativa de una página en el SGA hasta el sábado 7 de noviembre de 2026, 23:59.
